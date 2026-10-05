@@ -1,0 +1,560 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0820">
+  <title>I'm Sorry 🌙</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Sacramento&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --night1: #0a0820;
+      --night2: #1a1040;
+      --pink: #ff4fa3;
+      --cyan: #4fd8ff;
+      --text: #f3e8ff;
+      --glow: var(--pink);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      font-family: 'Quicksand', system-ui, sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: max(16px, env(safe-area-inset-top))
+               16px
+               max(16px, env(safe-area-inset-bottom));
+      overflow-x: hidden;
+
+      background:
+        radial-gradient(ellipse at 70% 0%, #2d1659 0%, transparent 55%),
+        linear-gradient(180deg, var(--night2), var(--night1));
+
+      background-attachment: fixed;
+    }
+
+    body.love {
+      --glow: #ff4fa3;
+      background:
+        radial-gradient(ellipse at 50% 0%, #6a1550 0%, transparent 60%),
+        linear-gradient(180deg, #2a0f45, #0a0820);
+      background-attachment: fixed;
+    }
+
+    body.sad {
+      --glow: #4fd8ff;
+      background:
+        radial-gradient(ellipse at 50% 0%, #123a63 0%, transparent 60%),
+        linear-gradient(180deg, #0d1f45, #060818);
+      background-attachment: fixed;
+    }
+
+    /* Twinkling stars */
+    #stars {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: .15; }
+      50% { opacity: 1; }
+    }
+
+    /* Main card */
+    .card {
+      position: relative;
+      z-index: 5;
+      width: 100%;
+      max-width: 420px;
+      padding: 34px 24px 28px;
+      text-align: center;
+      border-radius: 28px;
+
+      background: rgba(20, 12, 50, .78);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+
+      border: 2px solid var(--glow);
+      box-shadow:
+        0 0 18px var(--glow),
+        0 0 60px color-mix(in srgb, var(--glow) 40%, transparent),
+        inset 0 0 24px color-mix(in srgb, var(--glow) 25%, transparent);
+
+      transition: border-color .6s, box-shadow .6s;
+    }
+
+    .mascot {
+      display: inline-block;
+      font-size: clamp(84px, 24vw, 108px);
+      line-height: 1.1;
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      filter: drop-shadow(0 0 14px var(--glow));
+      animation: bob 3.2s ease-in-out infinite;
+    }
+
+    .mascot.pop {
+      animation: pop .7s ease, bob 3.2s ease-in-out .7s infinite;
+    }
+
+    .mascot.cry {
+      animation: shake .5s ease 3, bob 3.2s ease-in-out 1.5s infinite;
+    }
+
+    h1 {
+      font-family: 'Sacramento', cursive;
+      font-weight: 400;
+      font-size: clamp(40px, 12vw, 54px);
+      line-height: 1.05;
+      margin: 6px 0 12px;
+      color: #fff;
+      text-shadow:
+        0 0 6px #fff,
+        0 0 14px var(--glow),
+        0 0 32px var(--glow);
+    }
+
+    p.msg {
+      font-size: clamp(15px, 4.2vw, 17px);
+      line-height: 1.6;
+      min-height: 5em;
+      color: #e4d4ff;
+    }
+
+    .hint {
+      margin-top: 16px;
+      font-size: 13px;
+      opacity: .65;
+    }
+
+    /* Buttons */
+    .buttons {
+      display: flex;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    button {
+      flex: 1;
+      min-width: 0;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: clamp(16px, 4.6vw, 19px);
+      padding: 15px 8px;
+      border-radius: 18px;
+      cursor: pointer;
+      background: transparent;
+      color: #fff;
+      -webkit-tap-highlight-color: transparent;
+      transition: transform .15s ease, background .2s, box-shadow .2s;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #fff;
+      outline-offset: 3px;
+    }
+
+    button:active {
+      transform: scale(.94);
+    }
+
+    .kiss {
+      border: 2px solid var(--pink);
+      box-shadow:
+        0 0 12px var(--pink),
+        inset 0 0 12px rgba(255, 79, 163, .35);
+      text-shadow: 0 0 8px var(--pink);
+    }
+
+    .bite {
+      border: 2px solid var(--cyan);
+      box-shadow:
+        0 0 12px var(--cyan),
+        inset 0 0 12px rgba(79, 216, 255, .3);
+      text-shadow: 0 0 8px var(--cyan);
+    }
+
+    @media (hover: hover) {
+      .kiss:hover {
+        background: rgba(255, 79, 163, .25);
+        transform: translateY(-3px);
+      }
+
+      .bite:hover {
+        background: rgba(79, 216, 255, .22);
+        transform: translateY(-3px);
+      }
+    }
+
+    /* Falling hearts and tears */
+    #rain {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .drop {
+      position: absolute;
+      top: -60px;
+      animation: fall linear forwards;
+      will-change: transform, opacity;
+      user-select: none;
+    }
+
+    .drop.love {
+      filter:
+        drop-shadow(0 0 8px #ff4fa3)
+        drop-shadow(0 0 16px #ff4fa3);
+    }
+
+    .drop.tear {
+      filter:
+        drop-shadow(0 0 8px #4fd8ff)
+        drop-shadow(0 0 14px #2a8cff);
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translate3d(0, -10vh, 0) rotate(0);
+        opacity: 0;
+      }
+
+      8% {
+        opacity: 1;
+      }
+
+      100% {
+        transform: translate3d(var(--drift, 0), 112vh, 0)
+                   rotate(var(--spin, 0));
+        opacity: .9;
+      }
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pop {
+      0% { transform: scale(.6); }
+      50% { transform: scale(1.3) rotate(-6deg); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px) rotate(-4deg); }
+      75% { transform: translateX(8px) rotate(4deg); }
+    }
+
+    @media (max-width: 360px) {
+      .card {
+        padding: 28px 18px 24px;
+      }
+
+      .buttons {
+        gap: 8px;
+      }
+
+      button {
+        padding: 13px 5px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .mascot,
+      .star {
+        animation: none !important;
+      }
+
+      .drop {
+        animation-duration: 8s !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="stars" aria-hidden="true"></div>
+  <div id="rain" aria-hidden="true"></div>
+
+  <!-- Audio files: keep both MP3 files beside index.html -->
+  <audio id="kissAudio" src="bubu_ataaata.mp3" preload="auto"></audio>
+  <audio id="biteAudio" src="ReelAudio-39422.mp3" preload="auto"></audio>
+
+  <main class="card">
+    <div
+      class="mascot"
+      id="mascot"
+      role="img"
+      aria-label="Tap the moon for a surprise"
+    >🌙</div>
+
+    <h1 id="title">I'm so sorry, kuttaaaa</h1>
+
+    <p class="msg" id="msg">
+      I messed up, and under every star I wish I could take it back.
+      You're my whole sky. Choose how I make it up to you...
+    </p>
+
+    <div class="buttons">
+      <button class="kiss" id="kissBtn" type="button">
+        💋 Kiss
+      </button>
+
+      <button class="bite" id="biteBtn" type="button">
+        🦷 Bite
+      </button>
+    </div>
+
+    <p class="hint" id="hint">Choose wisely 😏</p>
+  </main>
+
+  <script>
+    (() => {
+      const rain = document.getElementById('rain');
+      const stars = document.getElementById('stars');
+      const mascot = document.getElementById('mascot');
+      const title = document.getElementById('title');
+      const msg = document.getElementById('msg');
+      const hint = document.getElementById('hint');
+
+      const kissAudio = document.getElementById('kissAudio');
+      const biteAudio = document.getElementById('biteAudio');
+
+      const kissBtn = document.getElementById('kissBtn');
+      const biteBtn = document.getElementById('biteBtn');
+
+      let timer = null;
+      let spawnTimeouts = [];
+      let currentAudio = null;
+
+      // Create twinkling stars
+      for (let i = 0; i < 70; i++) {
+        const star = document.createElement('i');
+
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        star.style.animationDuration =
+          2 + Math.random() * 3 + 's';
+
+        stars.appendChild(star);
+      }
+
+      // Kiss and Bite modes
+      const modes = {
+        kiss: {
+          body: 'love',
+          cls: 'love',
+          pop: 'pop',
+          rate: 100,
+
+          faces: ['😘', '🥰', '😍'],
+          items: ['❤️', '💖', '💋', '✨', '💕', '💗'],
+
+          title: 'Yay! A shower of love!',
+
+          msg: 'You forgave me! I promise to love you harder, hold you longer, and never dim your light again. 💞',
+
+          hint: "Tap Bite if you're feeling mischievous 😈"
+        },
+
+        bite: {
+          body: 'sad',
+          cls: 'tear',
+          pop: 'cry',
+          rate: 85,
+
+          faces: ['😭', '😿', '🥲'],
+          items: ['💧', '💦', '😢', '💧', '💦'],
+
+          title: 'Ouch! Rivers of tears!',
+
+          msg: 'Owwww! That really hurt... but okay, I deserved it. Are we even now? 🥹',
+
+          hint: 'Tap Kiss to make it all better 💋'
+        }
+      };
+
+      // Play the selected audio and stop the previous one
+      function playAudio(audio) {
+        kissAudio.pause();
+        biteAudio.pause();
+
+        // Reset both sounds so the next selection starts from the beginning
+        kissAudio.currentTime = 0;
+        biteAudio.currentTime = 0;
+
+        currentAudio = audio;
+
+        audio.currentTime = 0;
+
+        const playback = audio.play();
+
+        if (playback && typeof playback.catch === 'function') {
+          playback.catch((error) => {
+            console.warn(
+              'Audio could not be played. Check the MP3 filename and file location.',
+              error
+            );
+          });
+        }
+      }
+
+      // Create falling emoji
+      function spawn(mode) {
+        const element = document.createElement('span');
+
+        element.className = 'drop ' + mode.cls;
+
+        element.textContent =
+          mode.items[Math.floor(Math.random() * mode.items.length)];
+
+        element.style.left = Math.random() * 100 + 'vw';
+        element.style.fontSize =
+          16 + Math.random() * 28 + 'px';
+
+        element.style.animationDuration =
+          3.5 + Math.random() * 3.5 + 's';
+
+        element.style.setProperty(
+          '--drift',
+          (Math.random() * 80 - 40) + 'px'
+        );
+
+        element.style.setProperty(
+          '--spin',
+          (Math.random() * 360 - 180) + 'deg'
+        );
+
+        rain.appendChild(element);
+
+        element.addEventListener('animationend', () => {
+          element.remove();
+        }, { once: true });
+      }
+
+      // Start the falling emoji animation
+      function startRain(mode) {
+        clearInterval(timer);
+
+        // Cancel any delayed emoji from the previous selection
+        spawnTimeouts.forEach(clearTimeout);
+        spawnTimeouts = [];
+
+        for (let i = 0; i < 25; i++) {
+          const timeout = setTimeout(() => {
+            spawn(mode);
+          }, i * 30);
+
+          spawnTimeouts.push(timeout);
+        }
+
+        timer = setInterval(() => {
+          if (document.hidden) return;
+
+          if (rain.childElementCount < 140) {
+            spawn(mode);
+          }
+        }, mode.rate);
+      }
+
+      // Handle Kiss or Bite
+      function choose(key) {
+        const mode = modes[key];
+
+        // Change the audio according to the selected button
+        if (key === 'kiss') {
+          playAudio(kissAudio);
+        } else {
+          playAudio(biteAudio);
+        }
+
+        document.body.className = mode.body;
+
+        mascot.textContent =
+          mode.faces[Math.floor(Math.random() * mode.faces.length)];
+
+        mascot.className = 'mascot';
+
+        // Restart mascot animation
+        void mascot.offsetWidth;
+        mascot.classList.add(mode.pop);
+
+        title.textContent = mode.title;
+        msg.textContent = mode.msg;
+        hint.textContent = mode.hint;
+
+        startRain(mode);
+
+        // Optional vibration on supported phones
+        if (navigator.vibrate) {
+          navigator.vibrate(
+            key === 'kiss' ? 30 : [40, 40, 40]
+          );
+        }
+      }
+
+      // Button events
+      kissBtn.addEventListener('click', () => {
+        choose('kiss');
+      });
+
+      biteBtn.addEventListener('click', () => {
+        choose('bite');
+      });
+
+      // Tap the mascot to change its expression
+      mascot.addEventListener('click', () => {
+        const faces = ['🌙', '🥺', '😘', '🥹', '😚'];
+
+        mascot.textContent =
+          faces[Math.floor(Math.random() * faces.length)];
+      });
+
+      // Pause background effects while the page is hidden
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          clearInterval(timer);
+          spawnTimeouts.forEach(clearTimeout);
+          spawnTimeouts = [];
+        } else if (currentAudio && !currentAudio.paused) {
+          // Audio playback continues if the browser allows it.
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
